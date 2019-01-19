@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import article from '@/components/article'
+import myArticle from '@/components/myArticle'
 import postList from '@/components/postList'
 import userInfo from '@/components/userInfo'
 import sideBar from '@/components/sideBar'
@@ -18,7 +18,7 @@ export default new Router({
     path: '/topic/:id&:name',
     name: 'articleMsg',
     components: {
-      main: article,
+      main: myArticle,
       sidebar: sideBar
     }
   }, {

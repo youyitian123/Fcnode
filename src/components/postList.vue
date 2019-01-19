@@ -49,6 +49,7 @@
           <span class="last_active_time">{{post.create_at | formaDate }}</span>
         </div>
       </div>
+      <pagination @handle="renderlist"></pagination>
     </div>
   </div>
 </template>
@@ -56,33 +57,48 @@
 
 
 <script>
+import pagination from "./pagination";
+
 export default {
   name: "postList",
   data() {
     return {
       isLoading: true,
-      posts: []
+      posts: [],
+      postpage: 1
     };
   },
   methods: {
     getData() {
       this.$http
-        .get("https://cnodejs.org/api/v1/topics", {
-          page: 1,
-          limit: 20
+        .get("https://cnodejs.org/api/v1/topics/", {
+          params: {
+            page: this.postpage,
+            limit: 20
+          }
         })
         .then(res => {
+          ``;
           this.isLoading = false;
           this.posts = res.data.data;
+          console.log(this.posts);
           // console.log(res.data.data[0].author);
         })
         .catch(err => {
           console.log(err);
         });
+    },
+    renderlist(page) {
+      this.postpage = page;
+      console.log(this.postpage);
+      this.getData();
     }
   },
   beforeMount() {
     this.getData();
+  },
+  components: {
+    pagination
   }
 };
 </script>

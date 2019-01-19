@@ -1,5 +1,5 @@
 <template>
-  <div id="articlemsg">
+  <div id="myArticle">
     <div class="loading" v-if="isLoading">
       <img src="../assets/puff.svg" alt="123">
     </div>
@@ -109,9 +109,9 @@ export default {
 @import url("../assets/default.scss"); // 引入共有scss属性
 @import url("../assets/github-markdown.css"); //引入markdown样式
 
-#articlemsg{
+#myArticle{
   max-width: 1440px;
-  max-width: 960px;
+  min-width: 960px;
   margin-right: 20px;
 }
   .markdown-body {

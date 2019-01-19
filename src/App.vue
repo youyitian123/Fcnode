@@ -11,14 +11,14 @@
 <script>
 import topNav from "./components/topNav";
 import postList from "./components/postList";
-import article from "./components/article";
+import myArticle from "./components/myArticle";
 
 export default {
   name: "App",
   components: {
     topNav,
     postList,
-    article
+    myArticle
   }
 };
 </script>
@@ -34,6 +34,5 @@ main {
   align-content: center;
   justify-content: center;
 }
-
 </style>
 
