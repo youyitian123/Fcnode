@@ -1,5 +1,5 @@
 <template>
-  <div id="pagination">
+  <div class="btn_list">
     <div class="btn" @click="changeBtn">首页</div>
     <div class="btn" @click="changeBtn">上一页</div>
     <div
@@ -13,23 +13,19 @@
 </template>
 
 <style lang="scss" scoped>
-#pagination {
-  border-top: 1px solid #e5e5e5;
-  max-width: 1440px;
-  min-width: 960px;
-  width: 90%;
-  padding: 10px;
-  background: #fff;
+.btn_list {
   display: flex;
-  color: #999;
+  background: #fff;
+  padding: 10px;
   .btn {
-    cursor: pointer;
-    margin: 3px;
-    line-height: 20px;
+    color: #778087;
+    // border-radius: 3px 0;
     padding: 4px 12px;
+    line-height: 20px;
     border: 1px solid #ddd;
-    border-radius: 3px;
+    cursor: pointer;
   }
+
   .currentpage {
     color: #80bd01;
   }
@@ -57,7 +53,7 @@ export default {
         case "首页":
           this.btnpage = [1, 2, 3];
           this.changcurrentstyle(1);
-          // document.querySelector(".currentpage").click();
+        // document.querySelector(".currentpage").click();
         default:
           break;
       }

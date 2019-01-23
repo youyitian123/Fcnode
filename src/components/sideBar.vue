@@ -1,6 +1,6 @@
 <template>
-  <div id="sidebar" v-if="isLoading">
-    <div class="user_card wallpaper">
+  <div class="sidebar_panel">
+    <div class="user_card">
       <div class="header">作者</div>
       <div class="userinfo">
         <router-link
@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class="other_topic wallpaper">
+    <div class="other_topic">
       <div class="header">作者最近创建的话题</div>
       <ul>
         <li v-for="(item,index) in post.recent_topics" class="topic_title" :key="index">
@@ -34,7 +34,8 @@
         </li>
       </ul>
     </div>
-    <div class="noreply_topic wallpaper">
+
+    <div class="noreply_topic">
       <div class="header">作者最近参与的话题</div>
       <ul>
         <li v-for="(item,index) in post.recent_replies" class="topic_title" :key="index">
@@ -54,34 +55,37 @@
 </template>
 
 <style lang="scss" scoped>
-// @import url("../assets/default.scss"); // 引入共有scss属性
-#sidebar{
-  max-width: 390px;;
-}
-.user_card {
-  .userinfo {
-    font-size: 14px;
-    padding: 10px;
-    color: #778087;
-    line-height: 2em;
-    .big {
-      color: #333;
+.sidebar_panel {
+  float: right;
+  width: 400px;
+  background: #e1e1e1;
+  margin-top: 10px;
+
+  .noreply_topic,
+  .other_topic,
+  .user_card {
+    border-radius: 3px;
+    margin-bottom: 10px;
+    background: #fff;
+    .topic_title {
+      padding: 10px;
     }
-    .user_avatar {
-      width: 40px;
-      height: 40px;
+    .header {
       border-radius: 3px;
+      background: #f5f5f5;
+      padding: 10px;
+      display: flex;
     }
   }
-}
-.other_topic {
-  color: #778087;
-}
-.noreply_topic {
-  color: #778087;
-}
-.topic_title {
-  padding: 5px;
+
+  .userinfo {
+    padding: 10px;
+    line-height: 130%;
+    .user_avatar {
+      width: 30px;
+      height: 30px;
+    }
+  }
 }
 </style>
 

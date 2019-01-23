@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <topNav></topNav>
-    <main>
-      <router-view name="main"></router-view>
+    <main class="clearfix">
       <router-view name="sidebar"></router-view>
+      <router-view name="main"></router-view>
     </main>
   </div>
 </template>
@@ -25,14 +25,12 @@ export default {
 
 
 <style lang="scss">
-@import url("./assets/default.scss"); // 引入共有scss属性
-
-main {
-  width: 90%;
-  margin: 15px auto;
-  display: flex;
-  align-content: center;
-  justify-content: center;
+#app {
+  background: #e1e1e1;
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
 }
 </style>
 

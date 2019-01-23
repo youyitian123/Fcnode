@@ -1,9 +1,10 @@
 <template>
-  <div id="userinfo">
+  <div>
     <div class="loading" v-if="isLoading">
       <img src="../assets/puff.svg" alt="123">
     </div>
-    <div class="panel" v-else>
+
+    <div class="userinfo_panel" v-else>
       <div>
         <section class="userInfoMation">
           <div class="header">
@@ -30,12 +31,12 @@
           <div class="header">
             <span>最近创建的话题</span>
           </div>
-          <div v-if="post.recent_topics.length == 0" class="recent_topics_item inner">无话题</div>
+          <div v-if="post.recent_topics.length == 0" class="recent_topics_item">无话题</div>
           <div
             v-else
             v-for="(recent,index) in post.recent_topics"
             :key="index"
-            class="recent_topics_item inner"
+            class="recent_topics_item"
           >
             <div class="call">
               <!--头像-->
@@ -68,12 +69,12 @@
             <span>最近参与的话题</span>
           </div>
 
-          <div v-if="post.recent_replies.length == 0" class="recent_replies_item inner">无话题</div>
+          <div v-if="post.recent_replies.length == 0" class="recent_replies_item">无话题</div>
           <div
             v-else
             v-for="(recent,index) in post.recent_replies"
             :key="index"
-            class="recent_replies_item inner"
+            class="recent_replies_item"
           >
             <div class="call">
               <!--头像-->
@@ -142,70 +143,61 @@ export default {
 </script>
 
 
-<style lang="scss">
-@import url("../assets/default.scss"); // 引入共有scss样式
-
-section{
-  border-radius: 5px;
+<style lang="scss" scoped>
+.loading {
+  max-width: 960px;
+  padding-top: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.userInfoMation {
-  min-width: 960px;
-  margin-bottom: 10px;
-  .header {
-    .breadcrumb {
-      color: #80bd01;
-    }
-    .divider {
-      padding: 0 5px;
-      color: #ccc;
-    }
-  }
-  .userinfo {
-    font-size: 14px;
-    padding: 10px;
+.userinfo_panel {
+  max-width: 906px;
+  margin: 10px auto;
+  .userInfoMation {
     background: #fff;
-    color: #778087;
-    line-height: 2em;
-    .big {
-      color: #333;
-    }
-    .user_avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 3px;
-    }
-  }
-}
-
-.recent_topics_item,
-.recent_replies_item {
-  position: relative;
-  .last_active_time {
-    position: absolute;
-    right: 10px;
-    top: 5px;
-    font-size: 11px;
-    color: #778087;
-  }
-}
-
-.recent_topics_list {
-  background: #fff;
-  margin-bottom: 10px;
-  .recent_topics_item {
-    .call {
+    .header {
+      border-radius: 3px 0;
+      background: #f5f5f5;
       padding: 10px;
     }
-  }
-}
-
-.recent_replies_list {
-  background: #fff;
-  margin-bottom: 10px;
-  .recent_replies_item {
-    .call {
+    .userinfo {
       padding: 10px;
+      line-height: 2em;
+      color: #778087;
+      border-top: 1px solid #e5e5e5;
+      .user_avatar {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+  .recent_topics_list,
+  .recent_replies_list {
+    background: #fff;
+    margin-top: 10px;
+    .header {
+      border-radius: 3px 0;
+      background: #f5f5f5;
+      padding: 10px;
+    }
+    .recent_topics_item,
+    .recent_replies_item {
+      position: relative;
+      border-top: 1px solid #e5e5e5;
+      padding: 5px;
+      .user_avatar {
+        width: 30px;
+        height: 30px;
+      }
+      .last_active_time {
+        position: absolute;
+        right: 10px;
+        font-size: 12px;
+        top: 2px;
+        color: #999;
+      }
     }
   }
 }

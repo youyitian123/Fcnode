@@ -1,38 +1,49 @@
 <template>
-  <div id="myArticle">
-    <div class="loading" v-if="isLoading">
-      <img src="../assets/puff.svg" alt="123">
-    </div>
+  <div class="loading" v-if="isLoading">
+    <img src="../assets/puff.svg" alt="123">
+  </div>
 
-    <div class="panel" v-else>
-      <section class="content">
-        <div class="header">
-          <div class="topic_title">
-            <span
-              :class="[{put_good:(post.good == true),put_top:(post.top == true),topiclist_tab:(post.good != true && post.top != true )}]"
-            >{{post | tabFormatter}}</span>
-            
-            <span class="topic_title_content">{{post.title}}</span>
-          </div>
-          <div class="changes">
-            <span>发布于{{post.create_at | formaDate}}</span>
-            <span>作者 {{post.author.loginname}}</span>
-            <span>{{post.visit_count}} 次浏览</span>
-            <span>来自 {{post | tabFormatter}}</span>
-          </div>
+  <div v-else class="myArticle_panel">
+    <section class="content">
+      <div class="header">
+        <div class="topic_title">
+          <span
+            :class="[{put_good:(post.good == true),put_top:(post.top == true),topiclist_tab:(post.good != true && post.top != true )}]"
+          >{{post | tabFormatter}}</span>
+          
+          <span class="topic_title_content">{{post.title}}</span>
         </div>
+        <div class="changes">
+          <span>发布于{{post.create_at | formaDate}}</span>
+          <span>作者 {{post.author.loginname}}</span>
+          <span>{{post.visit_count}} 次浏览</span>
+          <span>来自 {{post | tabFormatter}}</span>
+        </div>
+      </div>
 
-        <div class="markdown_area">
-          <div v-html="post.content" class="markdown-body"></div>
-        </div>
-      </section>
+      <div class="markdofn_area">
+        <div v-html="post.content" class="markdown-body"></div>
+      </div>
+    </section>
 
-      <section class="reply_list">
-        <div class="header">
-          <span>{{sumIndex}} 回复</span>
-        </div>
-        <div v-for="(reply,index) in post.replies" :key="index" class="reply_list_item inner">
-          <div class="author_content">
+    <section class="reply_list">
+      <div class="header">
+        <span>{{sumIndex}} 回复</span>
+      </div>
+
+      <div v-for="(reply,index) in post.replies" :key="index" class="reply_list_item">
+        <div class="author_content">
+          <router-link
+            :to="{
+                  name:'userInfo',
+                  params:{
+                    name:reply.author.loginname
+                  }
+                  }"
+          >
+            <img :src="reply.author.avatar_url" alt class="user_avatar">
+          </router-link>
+          <div class="user_info">
             <router-link
               :to="{
                   name:'userInfo',
@@ -41,28 +52,16 @@
                   }
                   }"
             >
-              <img :src="reply.author.avatar_url" alt class="user_avatar">
+              <span>{{reply.author.loginname}}</span>
             </router-link>
-            <div class="user_info">
-              <router-link
-                :to="{
-                  name:'userInfo',
-                  params:{
-                    name:reply.author.loginname
-                  }
-                  }"
-              >
-                <span>{{reply.author.loginname}}</span>
-              </router-link>
-              <span class="reply_time">{{index +1}}楼 {{reply.create_at | formaDate}}</span>
-            </div>
-          </div>
-          <div class="reply_content">
-            <p v-html="reply.content" class="markdown-body"></p>
+            <span class="reply_time">{{index +1}}楼 {{reply.create_at | formaDate}}</span>
           </div>
         </div>
-      </section>
-    </div>
+        <div class="reply_content">
+          <p v-html="reply.content" class="markdown-body"></p>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -106,66 +105,83 @@ export default {
 
 
 <style lang="scss">
-@import url("../assets/default.scss"); // 引入共有scss属性
 @import url("../assets/github-markdown.css"); //引入markdown样式
 
-#myArticle{
-  max-width: 1440px;
-  min-width: 960px;
-  margin-right: 20px;
+.loading {
+  max-width: 960px;
+  padding-top: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-  .markdown-body {
-    padding: 0 20px;
-    background: #fff;
-  }
+
+.myArticle_panel {
+  float: left;
+  margin-top: 10px;
+  margin-right: 20px;
+  max-width: 960px;
+  border-radius: 3px;
 
   .content {
-    margin-bottom: 10px;
+    border-radius: 3px;
+
+    background: #fff;
     .header {
+      border-radius: 3px;
+      padding: 10px;
       border-bottom: 1px solid #e5e5e5;
-      background: #fff;
+
       .topic_title {
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 130%;
         margin: 8px 0;
-        .topic_title_content {
-          font-size: 22px;
-          font-weight: 700;
-        }
       }
       .changes {
-        line-height: 20px;
-        span {
-          font-size: 12px;
-          color: #838383;
-        }
-        span::before {
+        font-size: 12px;
+        color: #838383;
+        span:before {
           content: "•";
-          padding: 0 5px;
+          margin: 0 4px;
         }
       }
     }
-  }
-  .reply_list {
-    .reply_list_item {
+    .markdofn_area {
       padding: 10px;
-      background: #fff;
+    }
+  }
+
+  .reply_list {
+    border-radius: 3px 0;
+    background: #fff;
+    margin-top: 10px;
+    .header {
+      background: #f5f5f5;
+      padding: 10px;
+    }
+    .reply_list_item {
+      border-top: 1px solid #e5e5e5;
+      padding: 5px;
       .author_content {
         display: flex;
-        .user_info {
-          margin-left: 10px;
-          color: #666;
-          font-size: 12px;
-          font-weight: 700;
-          .reply_time {
-            color: #005580;
-            font-size: 11px;
-          }
+      }
+      .user_info {
+        margin-left: 10px;
+
+        .reply_time {
+          font-size: 11px;
+          color: #08c;
         }
       }
+      .user_avatar {
+        width: 30px;
+        height: 30px;
+      }
       .reply_content {
-        margin-top: -10px;
-        margin-left: 30px;
+        margin-left: 50px;
       }
     }
   }
+}
 </style>
 

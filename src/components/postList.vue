@@ -1,52 +1,54 @@
 <template>
-  <div id="postlist">
+  <div>
     <!--加载动画-->
     <div class="loading" v-if="isLoading">
       <img src="../assets/puff.svg" alt="加载动画">
     </div>
 
-    <div v-else class="panel">
-      <!--主题帖子列表-->
-      <div class="header">
-        <a href="#" class="topic-tab">全部</a>
-        <a href="#" class="topic-tab">精华</a>
-        <a href="#" class="topic-tab">分享</a>
-        <a href="#" class="topic-tab">问答</a>
-        <a href="#" class="topic-tab">招聘</a>
-        <a href="#" class="topic-tab">客户端测试</a>
-      </div>
+    <div class="postList_panel" v-else>
+      <div class="content">
+        <!--主题帖子列表-->
+        <div class="header">
+          <a href="#" class="topic-tab">全部</a>
+          <a href="#" class="topic-tab">精华</a>
+          <a href="#" class="topic-tab">分享</a>
+          <a href="#" class="topic-tab">问答</a>
+          <a href="#" class="topic-tab">招聘</a>
+          <a href="#" class="topic-tab">客户端测试</a>
+        </div>
 
-      <div class="topic_list">
-        <div v-for="post in posts" :key="post.id" class="topic_list_item inner">
-          <!--头像-->
-          <img :src="post.author.avatar_url" alt="头像" class="user_avatar">
-          <!--回复/浏览-->
-          <span class="reply_count">
-            <span class="count_of_replies">{{post.reply_count}}</span>
-            <span class="count_seperator">/</span>
-            <span class="count_of_visits">{{post.visit_count}}</span>
-          </span>
-          <!--分类-->
-          <span
-            :class="[{put_good:(post.good == true),put_top:(post.top == true),topiclist_tab:(post.good != true && post.top != true )}]"
-          >{{post | tabFormatter}}</span>
-          <!--标题-->
-          <span class="title">
-            <router-link
-              :to="{
+        <div class="topic_list">
+          <div v-for="post in posts" :key="post.id" class="topic_list_item">
+            <!--头像-->
+            <img :src="post.author.avatar_url" alt="头像" class="user_avatar">
+            <!--回复/浏览-->
+            <span class="reply_count">
+              <span class="count_of_replies">{{post.reply_count}}</span>
+              <span class="count_seperator">/</span>
+              <span class="count_of_visits">{{post.visit_count}}</span>
+            </span>
+            <!--分类-->
+            <span
+              :class="[{put_good:(post.good == true),put_top:(post.top == true),topiclist_tab:(post.good != true && post.top != true )}]"
+            >{{post | tabFormatter}}</span>
+            <!--标题-->
+            <span class="title">
+              <router-link
+                :to="{
                   name:'articleMsg',
                   params:{
                     id:post.id,
                     name:post.author.loginname
                   }
                   }"
-            >
-              <a href="javascript:void(0)">{{post.title}}</a>
-            </router-link>
-          </span>
+              >
+                <a href="javascript:void(0)">{{post.title}}</a>
+              </router-link>
+            </span>
 
-          <!--最后回复时间-->
-          <span class="last_active_time">{{post.create_at | formaDate }}</span>
+            <!--最后回复时间-->
+            <span class="last_active_time">{{post.create_at | formaDate }}</span>
+          </div>
         </div>
       </div>
       <pagination @handle="renderlist"></pagination>
@@ -105,59 +107,69 @@ export default {
 
 
 <style lang="scss" scoped>
-@import url("../assets/default.scss"); // 引入共有scss属性
-@import url("../assets/github-markdown.css"); //引入markdown样式
+.loading {
+  min-width: 960px;
+  margin-top: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-.panel {
-  background: #fff;
+.postList_panel {
+  font-size: 14px;
+  border-radius: 3px 0;
+  max-width: 960px;
+  margin: 20px auto;
+  background: #ffffff;
 
-  /**
- * 分类栏
- */
-  .header {
-    border-radius: 3px 3px 0 0;
-    padding: 15px;
-    background: #f6f6f6;
-    font-size: 14px;
-    .topic-tab {
-      color: #80bd01;
-      margin: 0 10px;
-    }
-    a:nth-child(1) {
-      background-color: #80bd01;
-      color: #fff;
-      padding: 3px 4px;
-      border-radius: 3px;
-    }
-  }
-
-  /**
- * 内容
- */
-  .topic_list {
-    .topic_list_item {
-      position: relative;
-      color: #333;
+  .content {
+    .header {
+      border-radius: 3px 0;
+      background: #f5f5f5;
       padding: 10px;
-      .user_avatar {
-        width: 30px;
-        height: 30px;
+      display: flex;
+      .topic-tab {
+        margin-right: 20px;
+        color: #80bd01;
       }
-      .reply_count {
-        .count_of_replies {
-          color: #9e78c0;
+    }
+
+    .topic_list {
+      .topic_list_item {
+        position: relative;
+        border-top: 1px solid #e5e5e5;
+        padding: 10px;
+        color: #333;
+
+        .user_avatar {
+          width: 30px;
+          height: 30px;
         }
-        .count_of_visits {
-          font-size: 10px;
-          color: #b4b4b4;
+
+        .put_good,
+        .put_top {
+          padding: 1px 3px;
+          border-radius: 3px;
+          font-size: 12px;
+          background: #80bd01;
+          color: #fff;
+          margin-right: 5px;
         }
-      }
-      .last_active_time {
-        position: absolute;
-        right: 10px;
-        top: 5px;
-        font-size: 11px;
-        color: #778087;
+        .topiclist_tab {
+          background: #e5e5e5;
+          padding: 1px 3px;
+          border-radius: 3px;
+          font-size: 12px;
+          color: #999;
+          margin-right: 5px;
+        }
+        .last_active_time {
+          position: absolute;
+          right: 10px;
+          font-size: 12px;
+          top: 2px;
+          color: #999;
+        }
       }
     }
   }
