@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar_panel">
+  <div v-if="isLoading" class="sidebar_panel">
     <div class="user_card">
       <div class="header">作者</div>
       <div class="userinfo">
@@ -103,7 +103,9 @@ export default {
       this.$http(`https://cnodejs.org/api/v1/user/${this.$route.params.name}`)
         .then(res => {
           this.post = res.data.data;
-          this.isLoading = true;
+          this.$bus.$on("msg", (value)=> {
+            this.isLoading = value;
+          });
         })
         .catch(err => {
           console.log(err);

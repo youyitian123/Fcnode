@@ -22,7 +22,7 @@ export default new Router({
       sidebar: sideBar
     }
   }, {
-    path: '/user/:name',
+    path: '/user/',
     name: 'userInfo',
     components: {
       main: userInfo,

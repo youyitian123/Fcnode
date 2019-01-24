@@ -8,6 +8,9 @@ import axios from 'axios'
 
 Vue.prototype.$http = axios
 
+const bus = new Vue()
+Vue.prototype.$bus = bus
+
 
 Vue.config.productionTip = false
 

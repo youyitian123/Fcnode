@@ -85,6 +85,7 @@ export default {
             this.isLoading = false;
             this.post = res.data.data;
             this.sumIndex = this.post.replies.length;
+            this.$bus.$emit("msg", true);
           }
         })
         .catch(err => {
