@@ -29,50 +29,50 @@
             </span>
             <!--分类-->
             <span
-              :class="[{put_good:(post.good == true),put_top:(post.top == true),topiclist_tab:(post.good != true && post.top != true )}]"
+            :class="[{put_good:(post.good == true),put_top:(post.top == true),topiclist_tab:(post.good != true && post.top != true )}]"
             >{{post | tabFormatter}}</span>
             <!--标题-->
             <span class="title">
               <router-link
-                :to="{
-                  name:'articleMsg',
-                  params:{
-                    id:post.id,
-                    name:post.author.loginname
-                  }
-                  }"
+              :to="{
+                name:'articleMsg',
+                params:{
+                  id:post.id,
+                  name:post.author.loginname
+                }
+              }"
               >
-                <a href="javascript:void(0)">{{post.title}}</a>
-              </router-link>
-            </span>
+              <a href="javascript:void(0)">{{post.title}}</a>
+            </router-link>
+          </span>
 
-            <!--最后回复时间-->
-            <span class="last_active_time">{{post.create_at | formaDate }}</span>
-          </div>
+          <!--最后回复时间-->
+          <span class="last_active_time">{{post.create_at | formaDate }}</span>
         </div>
       </div>
-      <pagination @handle="renderlist"></pagination>
     </div>
+    <pagination @handle="renderlist"></pagination>
   </div>
+</div>
 </template>
 
 
 
 <script>
-import pagination from "./pagination";
+  import pagination from "./pagination";
 
-export default {
-  name: "postList",
-  data() {
-    return {
-      isLoading: true,
-      posts: [],
-      postpage: 1
-    };
-  },
-  methods: {
-    getData() {
-      this.$http
+  export default {
+    name: "postList",
+    data() {
+      return {
+        isLoading: true,
+        posts: [],
+        postpage: 1
+      };
+    },
+    methods: {
+      getData() {
+        this.$http
         .get("https://cnodejs.org/api/v1/topics/", {
           params: {
             page: this.postpage,
@@ -80,7 +80,6 @@ export default {
           }
         })
         .then(res => {
-          ``;
           this.isLoading = false;
           this.posts = res.data.data;
           console.log(this.posts);
@@ -89,20 +88,20 @@ export default {
         .catch(err => {
           console.log(err);
         });
+      },
+      renderlist(page) {
+        this.postpage = page;
+        console.log(this.postpage);
+        this.getData();
+      }
     },
-    renderlist(page) {
-      this.postpage = page;
-      console.log(this.postpage);
+    beforeMount() {
       this.getData();
+    },
+    components: {
+      pagination
     }
-  },
-  beforeMount() {
-    this.getData();
-  },
-  components: {
-    pagination
-  }
-};
+  };
 </script>
 
 
